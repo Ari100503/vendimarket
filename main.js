@@ -91,7 +91,7 @@ class VendimarketApp {
                     }
                 },
                 temp: 'ambient',
-                image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400&h=300&fit=crop'
+                image: 'https://images.unsplash.com/photo-1464195157370-5b596406ff80?w=400&h=300&fit=crop'
             },
             'Soft Drinks': {
                 brands: {
@@ -195,7 +195,7 @@ class VendimarketApp {
                     }
                 },
                 temp: 'frozen',
-                image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop'
+                image: 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=400&h=300&fit=crop'
             },
             'Cookies': {
                 brands: {
@@ -231,7 +231,7 @@ class VendimarketApp {
                     }
                 },
                 temp: 'ambient',
-                image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&h=300&fit=crop'
+                image: 'https://images.unsplash.com/photo-1629431136420-23bbe56141a5?w=400&h=300&fit=crop'
             }
         };
 
