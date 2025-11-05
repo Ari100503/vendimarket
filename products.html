@@ -874,140 +874,116 @@
 
     <script src="main.js" defer></script>
 
-    <script defer>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Helper per immagini Unsplash (random coerente col prodotto)
-      const u = (q) => `https://source.unsplash.com/600x400/?${encodeURIComponent(q)}`;
+      // ---- helpers ----
+      const U = (q) => `https://source.unsplash.com/600x400/?${encodeURIComponent(q)}`;
     
-      // --- CATEGORIE (più "supermercato") ---
-      const CATEGORIES = [
-        "Fresh Produce","Bakery","Dairy & Eggs","Pantry","Beverages","Frozen","Household"
-      ];
-    
-      // --- BRANDS (curati, pochi e utili) ---
-      const BRANDS = [
-        "Vendimarket","Barilla","De Cecco","Mutti","Lavazza","Illy","Galbani","Parmalat",
-        "Granarolo","Rio Mare","San Pellegrino","Twinings","Tropicana","Riso Scotti","Cirio","De Nigris"
-      ];
-    
-      // --- PRODOTTI (meno da macchinetta, più da supermercato) ---
-      const PRODUCTS = [
-        {id:1,  name:"Red Apples (1kg)",           brand:"Vendimarket",   category:"Fresh Produce", price:2.49, temperature:"ambient", dietary:["vegan"],              img:u("apples produce")},
-        {id:2,  name:"Bananas (1kg)",              brand:"Vendimarket",   category:"Fresh Produce", price:1.99, temperature:"ambient", dietary:["vegan","low-sugar"], img:u("bananas fruit")},
-        {id:3,  name:"Vine Tomatoes (500g)",       brand:"Vendimarket",   category:"Fresh Produce", price:1.89, temperature:"ambient", dietary:["vegan"],              img:u("tomatoes")},
-        {id:4,  name:"Romaine Lettuce",            brand:"Vendimarket",   category:"Fresh Produce", price:1.49, temperature:"cold",    dietary:["vegan"],              img:u("romaine lettuce")},
-        {id:5,  name:"Fresh Baguette",             brand:"Vendimarket",   category:"Bakery",        price:1.20, temperature:"ambient", dietary:[],                      img:u("baguette bread")},
-        {id:6,  name:"Butter Croissants (2pc)",    brand:"Vendimarket",   category:"Bakery",        price:1.90, temperature:"ambient", dietary:[],                      img:u("croissant pastry")},
-        {id:7,  name:"Milk 1L",                    brand:"Parmalat",      category:"Dairy & Eggs",  price:1.29, temperature:"cold",    dietary:[],                      img:u("milk carton")},
-        {id:8,  name:"Free-range Eggs (6)",        brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.10, temperature:"cold",    dietary:[],                      img:u("eggs carton")},
-        {id:9,  name:"Mozzarella 125g",            brand:"Galbani",       category:"Dairy & Eggs",  price:1.35, temperature:"cold",    dietary:["gluten-free"],         img:u("mozzarella cheese")},
-        {id:10, name:"Greek Yogurt 500g",          brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.40, temperature:"cold",    dietary:["low-sugar"],          img:u("greek yogurt")},
-        {id:11, name:"Spaghetti 500g",             brand:"Barilla",       category:"Pantry",        price:1.09, temperature:"ambient", dietary:[],                      img:u("spaghetti pasta dry")},
-        {id:12, name:"Passata 700g",               brand:"Mutti",         category:"Pantry",        price:1.69, temperature:"ambient", dietary:["vegan","gluten-free"], img:u("tomato passata sauce")},
-        {id:13, name:"Arborio Rice 1kg",           brand:"Riso Scotti",   category:"Pantry",        price:2.49, temperature:"ambient", dietary:["vegan","gluten-free"], img:u("arborio rice raw")},
-        {id:14, name:"Extra Virgin Olive Oil 1L",  brand:"De Nigris",     category:"Pantry",        price:6.90, temperature:"ambient", dietary:["vegan","keto"],        img:u("olive oil bottle")},
-        {id:15, name:"Canned Tuna 3x80g",          brand:"Rio Mare",      category:"Pantry",        price:4.49, temperature:"ambient", dietary:[],                      img:u("tuna can")},
-        {id:16, name:"Espresso Beans 1kg",         brand:"Lavazza",       category:"Beverages",     price:12.90,temperature:"ambient", dietary:["keto","low-sugar"],    img:u("coffee beans espresso")},
-        {id:17, name:"Earl Grey Tea 25 bags",      brand:"Twinings",      category:"Beverages",     price:3.20, temperature:"ambient", dietary:["vegan","low-sugar"],   img:u("earl grey tea")},
-        {id:18, name:"Orange Juice 1L",            brand:"Tropicana",     category:"Beverages",     price:2.10, temperature:"cold",    dietary:["vegan"],              img:u("orange juice bottle")},
-        {id:19, name:"Sparkling Water 1L",         brand:"San Pellegrino",category:"Beverages",     price:0.89, temperature:"ambient", dietary:["vegan"],              img:u("sparkling water bottle")},
-        {id:20, name:"Frozen Margherita Pizza",    brand:"Vendimarket",   category:"Frozen",        price:3.99, temperature:"frozen",  dietary:[],                      img:u("frozen pizza margherita")},
-        {id:21, name:"Vanilla Gelato 500ml",       brand:"Vendimarket",   category:"Frozen",        price:3.50, temperature:"frozen",  dietary:[],                      img:u("ice cream tub vanilla")},
-        {id:22, name:"Paper Towels (2-pack)",      brand:"Vendimarket",   category:"Household",     price:1.99, temperature:"ambient", dietary:[],                      img:u("paper towels roll")},
-        {id:23, name:"Dish Soap 500ml",            brand:"Vendimarket",   category:"Household",     price:1.49, temperature:"ambient", dietary:[],                      img:u("dish soap bottle")}
-      ];
-    
-      // ---------- RENDERING ----------
       const els = {
-        categoryFilters: document.getElementById('categoryFilters'),
-        brandFilters:    document.getElementById('brandFilters'),
-        productsGrid:    document.getElementById('productsGrid'),
-        resultsCount:    document.getElementById('resultsCount'),
-        loadingState:    document.getElementById('loadingState'),
-        emptyState:      document.getElementById('emptyState'),
-        searchInput:     document.getElementById('searchInput'),
-        sortSelect:      document.getElementById('sortSelect'),
-        priceSlider:     document.getElementById('priceSlider'),
-        maxPrice:        document.getElementById('maxPrice'),
+        category: document.getElementById('categoryFilters'),
+        brand:    document.getElementById('brandFilters'),
+        temp:     document.getElementById('temperatureFilters'),
+        diet:     document.getElementById('dietaryFilters'),
+        grid:     document.getElementById('productsGrid'),
+        count:    document.getElementById('resultsCount'),
+        empty:    document.getElementById('emptyState'),
+        loading:  document.getElementById('loadingState'),
+        search:   document.getElementById('searchInput'),
+        sort:     document.getElementById('sortSelect'),
+        slider:   document.getElementById('priceSlider'),
+        maxPrice: document.getElementById('maxPrice'),
       };
     
-      const state = { category:null, brand:null, temps:new Set(), diets:new Set(), q:"", maxPrice: 50, sort:"popularity" };
+      // ---- dataset "supermercato" ----
+      const CATEGORIES = ["Fresh Produce","Bakery","Dairy & Eggs","Pantry","Beverages","Frozen","Household"];
+      const BRANDS = ["Vendimarket","Barilla","De Cecco","Mutti","Lavazza","Illy","Galbani","Parmalat","Granarolo","Rio Mare","San Pellegrino","Twinings","Tropicana","Riso Scotti","Cirio","De Nigris"];
     
-      function tag(label, onClick, active=false){
+      const PRODUCTS = [
+        {name:"Red Apples (1kg)",          brand:"Vendimarket",   category:"Fresh Produce", price:2.49, temperature:"ambient", dietary:["vegan"],              img:U("apples produce grocery")},
+        {name:"Bananas (1kg)",             brand:"Vendimarket",   category:"Fresh Produce", price:1.99, temperature:"ambient", dietary:["vegan","low-sugar"], img:U("bananas fruit")},
+        {name:"Vine Tomatoes (500g)",      brand:"Vendimarket",   category:"Fresh Produce", price:1.89, temperature:"ambient", dietary:["vegan"],              img:U("tomatoes")},
+        {name:"Romaine Lettuce",           brand:"Vendimarket",   category:"Fresh Produce", price:1.49, temperature:"cold",    dietary:["vegan"],              img:U("romaine lettuce")},
+        {name:"Fresh Baguette",            brand:"Vendimarket",   category:"Bakery",        price:1.20, temperature:"ambient", dietary:[],                      img:U("baguette bread")},
+        {name:"Butter Croissants (2pc)",   brand:"Vendimarket",   category:"Bakery",        price:1.90, temperature:"ambient", dietary:[],                      img:U("croissant pastry")},
+        {name:"Milk 1L",                   brand:"Parmalat",      category:"Dairy & Eggs",  price:1.29, temperature:"cold",    dietary:[],                      img:U("milk carton")},
+        {name:"Free-range Eggs (6)",       brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.10, temperature:"cold",    dietary:[],                      img:U("eggs carton")},
+        {name:"Mozzarella 125g",           brand:"Galbani",       category:"Dairy & Eggs",  price:1.35, temperature:"cold",    dietary:["gluten-free"],         img:U("mozzarella cheese")},
+        {name:"Greek Yogurt 500g",         brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.40, temperature:"cold",    dietary:["low-sugar"],          img:U("greek yogurt")},
+        {name:"Spaghetti 500g",            brand:"Barilla",       category:"Pantry",        price:1.09, temperature:"ambient", dietary:[],                      img:U("spaghetti dry pasta")},
+        {name:"Passata 700g",              brand:"Mutti",         category:"Pantry",        price:1.69, temperature:"ambient", dietary:["vegan","gluten-free"], img:U("tomato passata sauce")},
+        {name:"Arborio Rice 1kg",          brand:"Riso Scotti",   category:"Pantry",        price:2.49, temperature:"ambient", dietary:["vegan","gluten-free"], img:U("arborio rice raw")},
+        {name:"Extra Virgin Olive Oil 1L", brand:"De Nigris",     category:"Pantry",        price:6.90, temperature:"ambient", dietary:["vegan","keto"],        img:U("olive oil bottle")},
+        {name:"Canned Tuna 3x80g",         brand:"Rio Mare",      category:"Pantry",        price:4.49, temperature:"ambient", dietary:[],                      img:U("tuna can")},
+        {name:"Espresso Beans 1kg",        brand:"Lavazza",       category:"Beverages",     price:12.90,temperature:"ambient", dietary:["keto","low-sugar"],    img:U("coffee beans espresso")},
+        {name:"Earl Grey Tea 25 bags",     brand:"Twinings",      category:"Beverages",     price:3.20, temperature:"ambient", dietary:["vegan","low-sugar"],   img:U("earl grey tea box")},
+        {name:"Orange Juice 1L",           brand:"Tropicana",     category:"Beverages",     price:2.10, temperature:"cold",    dietary:["vegan"],              img:U("orange juice bottle")},
+        {name:"Sparkling Water 1L",        brand:"San Pellegrino",category:"Beverages",     price:0.89, temperature:"ambient", dietary:["vegan"],              img:U("sparkling water bottle")},
+        {name:"Frozen Margherita Pizza",   brand:"Vendimarket",   category:"Frozen",        price:3.99, temperature:"frozen",  dietary:[],                      img:U("frozen pizza margherita")},
+        {name:"Vanilla Gelato 500ml",      brand:"Vendimarket",   category:"Frozen",        price:3.50, temperature:"frozen",  dietary:[],                      img:U("ice cream tub vanilla")},
+        {name:"Paper Towels (2-pack)",     brand:"Vendimarket",   category:"Household",     price:1.99, temperature:"ambient", dietary:[],                      img:U("paper towels roll")},
+        {name:"Dish Soap 500ml",           brand:"Vendimarket",   category:"Household",     price:1.49, temperature:"ambient", dietary:[],                      img:U("dish soap bottle")}
+      ];
+    
+      // stato filtri
+      const state = { q:"", cat:null, brand:null, temps:new Set(), diets:new Set(), max:50, sort:"popularity" };
+    
+      // utility per creare tag filtro
+      const mkTag = (label, onClick, active=false) => {
         const d = document.createElement('div');
-        d.className = 'filter-tag' + (active ? ' active':'');
+        d.className = 'filter-tag' + (active?' active':'');
         d.textContent = label;
         d.addEventListener('click', () => onClick(d, label));
         return d;
-      }
+      };
     
+      // popola categorie e brand (sovrascrive quelli di main.js)
       function seedFilters(){
-        // Categories
-        els.categoryFilters.innerHTML = '';
-        els.categoryFilters.appendChild(tag('All Products', (d)=>{ 
-          [...els.categoryFilters.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); 
-          state.category = null; render(); 
-        }, true));
-        CATEGORIES.forEach(c => els.categoryFilters.appendChild(tag(c, (d)=>{ 
-          [...els.categoryFilters.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); 
-          state.category = c; render(); 
-        })));
+        els.category.innerHTML = '';
+        els.category.appendChild(mkTag('All Products', (d)=>{ [...els.category.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.cat=null; render(); }, true));
+        CATEGORIES.forEach(c => els.category.appendChild(mkTag(c, (d)=>{ [...els.category.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.cat=c; render(); })));
     
-        // Brands (curati)
-        els.brandFilters.innerHTML = '';
-        els.brandFilters.appendChild(tag('All Brands', (d)=>{ 
-          [...els.brandFilters.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); 
-          state.brand = null; render(); 
-        }, true));
-        BRANDS.forEach(b => els.brandFilters.appendChild(tag(b, (d)=>{ 
-          [...els.brandFilters.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); 
-          state.brand = b; render(); 
-        })));
+        els.brand.innerHTML = '';
+        els.brand.appendChild(mkTag('All Brands', (d)=>{ [...els.brand.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.brand=null; render(); }, true));
+        BRANDS.forEach(b => els.brand.appendChild(mkTag(b, (d)=>{ [...els.brand.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.brand=b; render(); })));
     
-        // Temperature & Dietary (già presenti in HTML): attivo toggle multiplo
-        document.querySelectorAll('[data-temp]').forEach(t=>{
+        // toggle multipli per temperature & dietary (gli elementi sono già in HTML)
+        els.temp.querySelectorAll('[data-temp]').forEach(t => {
           t.addEventListener('click', ()=>{ t.classList.toggle('active');
-            const key = t.dataset.temp; t.classList.contains('active') ? state.temps.add(key) : state.temps.delete(key); render();
+            const k = t.dataset.temp; t.classList.contains('active') ? state.temps.add(k) : state.temps.delete(k); render();
           });
         });
-        document.querySelectorAll('[data-diet]').forEach(t=>{
+        els.diet.querySelectorAll('[data-diet]').forEach(t => {
           t.addEventListener('click', ()=>{ t.classList.toggle('active');
-            const key = t.dataset.diet; t.classList.contains('active') ? state.diets.add(key) : state.diets.delete(key); render();
+            const k = t.dataset.diet; t.classList.contains('active') ? state.diets.add(k) : state.diets.delete(k); render();
           });
         });
       }
     
       function card(p){
+        const dietHTML = p.dietary?.length ? `<div class="dietary-badges">${p.dietary.map(d => `<span class="dietary-badge ${d==='vegan'?'badge-vegan':d==='gluten-free'?'badge-gluten-free':d==='keto'?'badge-keto':'badge-low-sugar'}">${d.replace('-',' ')}</span>`).join('')}</div>` : '';
         return `
           <div class="product-card">
             <div class="product-image">
-              <img src="${p.img}" alt="${p.name}">
-              <span class="temperature-badge ${p.temperature==='cold'?'temp-cold':p.temperature==='frozen'?'temp-frozen':'temp-ambient'}">
-                ${p.temperature[0].toUpperCase()+p.temperature.slice(1)}
-              </span>
+              <img src="${p.img}" alt="${p.name}" onerror="this.onerror=null;this.src='https://source.unsplash.com/600x400/?grocery';">
+              <span class="temperature-badge ${p.temperature==='cold'?'temp-cold':p.temperature==='frozen'?'temp-frozen':'temp-ambient'}">${p.temperature[0].toUpperCase()+p.temperature.slice(1)}</span>
             </div>
             <div class="product-info">
               <div class="product-brand">${p.brand}</div>
               <h3>${p.name}</h3>
-              ${p.dietary?.length ? `<div class="dietary-badges">${p.dietary.map(d => 
-                `<span class="dietary-badge ${d==='vegan'?'badge-vegan':d==='gluten-free'?'badge-gluten-free':d==='keto'?'badge-keto':'badge-low-sugar'}">${d.replace('-',' ')}</span>`
-              ).join('')}</div>` : ''}
+              ${dietHTML}
               <div class="product-price">$${p.price.toFixed(2)}</div>
-              <div class="product-actions">
-                <button class="add-to-cart">Add to Cart</button>
-              </div>
+              <div class="product-actions"><button class="add-to-cart">Add to Cart</button></div>
             </div>
           </div>`;
       }
     
       function applyFilters(list){
-        return list.filter(p => 
-          (!state.category || p.category===state.category) &&
+        return list.filter(p =>
+          (!state.cat || p.category===state.cat) &&
           (!state.brand || p.brand===state.brand) &&
           (!state.temps.size || state.temps.has(p.temperature)) &&
           (!state.diets.size || [...state.diets].every(d => p.dietary?.includes(d))) &&
-          (p.price <= state.maxPrice) &&
-          (!state.q || (p.name + ' ' + p.brand).toLowerCase().includes(state.q))
+          (p.price <= state.max)
         );
       }
     
@@ -1017,29 +993,31 @@
           case 'price-high': return list.sort((a,b)=>b.price-a.price);
           case 'name':       return list.sort((a,b)=>a.name.localeCompare(b.name));
           case 'brand':      return list.sort((a,b)=>a.brand.localeCompare(b.brand));
-          default:           return list; // popularity/freshness: non gestito qui
+          default:           return list;
         }
       }
     
       function render(){
-        els.loadingState.style.display = 'none';
-        const q = (els.searchInput.value||'').trim().toLowerCase();
-        state.q = q;
-        const filtered = sortList(applyFilters(PRODUCTS.slice()));
-        els.resultsCount.textContent = `${filtered.length} products`;
-        els.productsGrid.innerHTML = filtered.map(card).join('');
-        els.emptyState.style.display = filtered.length ? 'none' : 'block';
+        els.loading.style.display = 'none';
+        const q = (els.search.value||'').trim().toLowerCase();
+        const filtered = sortList(applyFilters(PRODUCTS.filter(p => (p.name+' '+p.brand).toLowerCase().includes(q))));
+        els.count.textContent = `${filtered.length} products`;
+        els.grid.innerHTML = filtered.map(card).join('');
+        els.empty.style.display = filtered.length ? 'none' : 'block';
       }
     
-      // Events base
-      els.searchInput.addEventListener('input', render);
-      els.sortSelect.addEventListener('change', (e)=>{ state.sort = e.target.value; render(); });
-      els.priceSlider.addEventListener('input', (e)=>{ state.maxPrice = +e.target.value; els.maxPrice.textContent = `$${state.maxPrice}+`; render(); });
+      // eventi
+      els.search.addEventListener('input', render);
+      els.sort.addEventListener('change', (e)=>{ state.sort = e.target.value; render(); });
+      els.slider.addEventListener('input', (e)=>{ state.max = +e.target.value; els.maxPrice.textContent = `$${state.max}+`; render(); });
     
       seedFilters();
       render();
     });
-</script>
+    </script>
+
+
+    
 
 
 </body>
