@@ -595,6 +595,16 @@
             text-align: center;
         }
 
+        .stats-section{
+            background: #15242d;                 /* scegli una tinta diversa dalla fascia sopra */
+            padding: clamp(56px, 8vw, 96px) 2rem; /* spazio sopra/sotto così il titolo non rimane attaccato */
+            position: relative;
+            margin: 0;                            /* evita effetti di margin-collapsing */
+        }
+
+        .stats-section::before{ top:0; }
+        .stats-section::after{ bottom:0; }
+
         .stat-number {
             font-size: 3rem;
             font-weight: 700;
