@@ -579,9 +579,10 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr));
             gap: 2rem;
-            max-width: 800px;
+            max-width: 1200px;
+            align-items: start;
             margin: 0 auto;
         }
 
@@ -602,6 +603,11 @@
             opacity: 0.9;
             margin-top: 0.5rem;
         }
+
+        @media (max-width: 900px){
+            .stats-grid{ grid-template-columns: 1fr 1fr; }
+        }
+
 
         /* Footer */
         .footer {
