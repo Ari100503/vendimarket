@@ -572,22 +572,20 @@
         }
 
         /* Stats Section */
-        .stats-section {
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr));
-            gap: 2rem;
+        .stats-section .stats-grid {
+            display:flex !important;
+            flex-direction:row !important;
+            flex-wrap: nowrap !important;
+            justify-content:space-between;
+            align-items: flex-start;
+            gap: 2.5 rem;
             max-width: 1200px;
-            align-items: start;
             margin: 0 auto;
         }
 
-        .stat-item {
-            padding: 2rem;
+        .stats-section .stat-item {
+            flex: 1 1 0;
+            text-align: center;
         }
 
         .stat-number {
