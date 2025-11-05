@@ -1,1024 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Vendimarket | 3,500+ Items Available 24/7</title>
-    <meta name="description" content="Browse our complete catalog of 3,500+ products. Filter by category, dietary needs, and temperature zones.">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- Core Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-    
-    <style>
-        :root {
-            --primary-blue: #2C3E50;
-            --bright-cyan: #00BCD4;
-            --pure-white: #FFFFFF;
-            --warm-gray: #95A5A6;
-            --success-green: #27AE60;
-            --alert-orange: #E67E22;
-            --electric-blue: #3498DB;
-            --soft-mint: #1ABC9C;
-            --dark-slate: #1a252f;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-slate) 100%);
-            color: var(--pure-white);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Navigation (same as index) */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--bright-cyan);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--pure-white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--bright-cyan);
-        }
-
-        .cart-icon {
-            position: relative;
-            background: var(--bright-cyan);
-            color: var(--primary-blue);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--alert-orange);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 80px;
-            padding: 2rem;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--pure-white);
-        }
-
-        .page-subtitle {
-            font-size: 1.2rem;
-            color: var(--bright-cyan);
-            margin-bottom: 2rem;
-        }
-
-        /* Search and Filter Section */
-        .filter-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .search-bar {
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--primary-blue);
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            background: var(--pure-white);
-            box-shadow: 0 5px 20px rgba(0, 188, 212, 0.3);
-        }
-
-        .search-input::placeholder {
-            color: var(--warm-gray);
-        }
-
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .filter-group {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .filter-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--bright-cyan);
-        }
-
-        .filter-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .filter-tag {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--pure-white);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .filter-tag:hover {
-            background: var(--bright-cyan);
-            color: var(--primary-blue);
-            transform: translateY(-2px);
-        }
-
-        .filter-tag.active {
-            background: var(--bright-cyan);
-            color: var(--primary-blue);
-            font-weight: 600;
-        }
-
-        /* Price Range Slider */
-        .price-range {
-            margin-top: 1rem;
-        }
-
-        .price-slider {
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        .price-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--bright-cyan);
-            cursor: pointer;
-        }
-
-        .price-values {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        /* Product Grid */
-        .products-section {
-            margin-top: 2rem;
-        }
-
-        .products-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .results-count {
-            font-size: 1.1rem;
-            color: var(--bright-cyan);
-        }
-
-        .sort-select {
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--pure-white);
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .product-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 150px;
-            background: var(--pure-white);
-            border-radius: 12px;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-info {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .temperature-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-        }
-
-        .temp-ambient {
-            background: rgba(149, 165, 166, 0.9);
-            color: var(--pure-white);
-        }
-
-        .temp-cold {
-            background: rgba(52, 152, 219, 0.9);
-            color: var(--pure-white);
-        }
-
-        .temp-frozen {
-            background: rgba(41, 128, 185, 0.9);
-            color: var(--pure-white);
-        }
-
-        .product-info h3 {
-            font-size: 1.05rem;
-            margin-bottom: 0.4rem;
-            color: var(--pure-white);
-            font-weight: 600;
-            line-height: 1.3;
-        }
-
-        .product-brand {
-            font-size: 0.8rem;
-            color: var(--warm-gray);
-            margin-bottom: 0.3rem;
-        }
-
-        .product-description {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-            display: none; /* Hidden to save space */
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--bright-cyan);
-            margin-bottom: 0.75rem;
-        }
-
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            font-size: 0.75rem;
-            color: var(--warm-gray);
-        }
-
-        .product-category,
-        .product-flavor {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.25rem;
-            line-height: 1.2;
-        }
-
-        .product-locations {
-            margin: 0.5rem 0;
-            padding: 0.6rem;
-            background: rgba(0, 188, 212, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(0, 188, 212, 0.3);
-        }
-
-        .locations-title {
-            font-size: 0.75rem;
-            color: var(--bright-cyan);
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-        }
-
-        .location-badge {
-            display: inline-block;
-            background: rgba(0, 188, 212, 0.2);
-            color: var(--bright-cyan);
-            padding: 0.2rem 0.4rem;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            margin: 0.15rem 0.15rem 0.15rem 0;
-            border: 1px solid rgba(0, 188, 212, 0.4);
-            white-space: nowrap;
-        }
-
-        .slot-info {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 0.3rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .cart-location {
-            display: inline-block;
-            background: rgba(0, 188, 212, 0.2);
-            color: var(--bright-cyan);
-            padding: 0.2rem 0.5rem;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            margin-right: 0.25rem;
-        }
-
-        .item-slot {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 0.25rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .item-locations {
-            margin-top: 0.5rem;
-        }
-
-        .dietary-badges {
-            display: flex;
-            gap: 0.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .dietary-badge {
-            padding: 0.25rem 0.5rem;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .badge-vegan {
-            background: var(--success-green);
-            color: var(--pure-white);
-        }
-
-        .badge-gluten-free {
-            background: var(--alert-orange);
-            color: var(--pure-white);
-        }
-
-        .badge-keto {
-            background: var(--electric-blue);
-            color: var(--pure-white);
-        }
-
-        .badge-low-sugar {
-            background: var(--soft-mint);
-            color: var(--pure-white);
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: auto;
-            padding-top: 0.5rem;
-        }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            padding: 0.5rem;
-        }
-
-        .quantity-btn {
-            width: 30px;
-            height: 30px;
-            border: none;
-            background: var(--bright-cyan);
-            color: var(--primary-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .quantity-btn:hover {
-            background: var(--electric-blue);
-            transform: scale(1.1);
-        }
-
-        .quantity-display {
-            min-width: 30px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .add-to-cart {
-            flex: 1;
-            background: var(--bright-cyan);
-            color: var(--primary-blue);
-            border: none;
-            padding: 0.75rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .add-to-cart:hover {
-            background: var(--electric-blue);
-            transform: translateY(-2px);
-        }
-
-        .add-to-cart:disabled {
-            background: var(--warm-gray);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Loading and Empty States */
-        .loading-state {
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid var(--bright-cyan);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--warm-gray);
-        }
-
-        .empty-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--pure-white);
-        }
-
-        /* Recipe Bundles Section */
-        .recipe-bundles {
-            margin-top: 4rem;
-            padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .bundles-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: var(--bright-cyan);
-        }
-
-        .bundles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .bundle-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .bundle-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .bundle-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .bundle-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--pure-white);
-        }
-
-        .bundle-savings {
-            background: var(--success-green);
-            color: var(--pure-white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .bundle-items {
-            margin-bottom: 1.5rem;
-        }
-
-        .bundle-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .bundle-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .bundle-total {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--bright-cyan);
-        }
-
-        .add-bundle {
-            background: var(--bright-cyan);
-            color: var(--primary-blue);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .add-bundle:hover {
-            background: var(--electric-blue);
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark-slate);
-            padding: 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 4rem;
-        }
-
-        .footer p {
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 1rem;
-            }
-
-            .filter-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .page-title {
-                font-size: 2rem;
-            }
-        }
-
-        /* Animation Classes */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .slide-up {
-            opacity: 0;
-            transform: translateY(50px);
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products — Vendimarket</title>
+
+  <!-- Facoltativo: il tuo foglio stile globale -->
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+
+  <style>
+    :root{
+      --primary-blue: #14c9d5;
+      --bg-deep: #22313a;
+      --bg-panel: #31434f;
+      --text: #e9f1f5;
+      --text-dim: #bcd0da;
+      --card: #2b3b46;
+      --chip: rgba(255,255,255,.08);
+      --chip-border: rgba(255,255,255,.16);
+      --ok: #1dd1a1;
+      --danger: #ee5253;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; color:var(--text); background:#0f1c24}
+    h1,h2,h3{margin:0 0 .6rem}
+    .section-title{font-size: clamp(28px, 4vw, 56px); font-weight: 800; text-align:center}
+    .container{max-width:1200px; margin:0 auto; padding:clamp(24px,4vw,48px) 20px}
+
+    /* Fascia dedicata alla sezione prodotti */
+    .catalog-section{background: var(--bg-deep)}
+    .toolbar{
+      display:flex; flex-wrap:wrap; gap:12px; align-items:center;
+      margin: 18px 0 10px;
+    }
+    .toolbar .search{flex:1 1 280px; min-width:240px}
+    .toolbar input[type="search"],
+    .toolbar select{
+      width:100%; padding:.65rem .8rem; border-radius:12px;
+      border:1px solid var(--chip-border); background:var(--chip);
+      color:var(--text);
+    }
+    .price-filter{display:flex; align-items:center; gap:.5rem; margin-left:auto}
+    .price-filter input[type="range"]{accent-color:var(--primary-blue)}
+    .results-count{margin-left:auto; opacity:.8}
+
+    /* Blocchi filtri */
+    .filters-grid{
+      display:grid; gap:16px; margin: 14px 0 22px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .filter-block{
+      background: var(--bg-panel);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px; padding:16px;
+    }
+    .filter-block h3{color:var(--primary-blue); font-size:20px; margin-bottom:10px}
+    .filter-list{display:flex; flex-wrap:wrap; gap:10px}
+    .filter-tag{
+      padding:.5rem .9rem; border-radius:999px; font-weight:600; color:var(--text);
+      border:1px solid var(--chip-border); background: var(--chip); cursor:pointer;
+      user-select:none; transition: .15s ease-in-out;
+    }
+    .filter-tag:hover{transform: translateY(-1px)}
+    .filter-tag.active{background:var(--primary-blue); color:#00252b; border-color: transparent}
+
+    /* Griglia prodotti */
+    .state{opacity:.8; text-align:center; padding:16px}
+    .products-grid{
+      display:grid; gap:18px; grid-template-columns: repeat(4, 1fr);
+    }
+    .product-card{
+      background: var(--card); border: 1px solid rgba(255,255,255,.06);
+      border-radius:16px; overflow:hidden; display:flex; flex-direction:column;
+    }
+    .product-image{position:relative; background:#122028; aspect-ratio: 3/2; overflow:hidden}
+    .product-image img{width:100%; height:100%; object-fit:cover; display:block}
+    .temperature-badge{
+      position:absolute; right:10px; top:10px; padding:.35rem .6rem; border-radius:999px;
+      font-size:12px; background:rgba(0,0,0,.55); color:#fff; border:1px solid rgba(255,255,255,.2)
+    }
+    .temp-ambient{background: rgba(20,201,213,.2)}
+    .temp-cold{background: rgba(52,172,224,.35)}
+    .temp-frozen{background: rgba(78,115,223,.45)}
+
+    .product-info{padding:14px}
+    .product-brand{opacity:.75; font-weight:600; margin-bottom:4px}
+    .product-card h3{font-size:18px; margin:0 0 8px}
+    .dietary-badges{display:flex; flex-wrap:wrap; gap:6px; margin: 0 0 10px}
+    .dietary-badge{font-size:12px; padding:.25rem .5rem; border-radius:8px; border:1px solid var(--chip-border); background:var(--chip)}
+    .badge-vegan{border-color:#20e27a; color:#20e27a}
+    .badge-keto{border-color:#8be9fd; color:#8be9fd}
+    .badge-gluten-free{border-color:#feca57; color:#feca57}
+    .badge-low-sugar{border-color:#c084fc; color:#c084fc}
+    .product-price{font-weight:800; font-size:18px; margin-top:auto}
+    .product-actions{margin-top:10px}
+    .add-to-cart{
+      width:100%; padding:.6rem .8rem; border-radius:10px; border:0; font-weight:700;
+      color:#00252b; background:var(--primary-blue); cursor:pointer;
+    }
+
+    @media (max-width: 1100px){
+      .filters-grid{grid-template-columns: 1fr 1fr}
+      .products-grid{grid-template-columns: 1fr 1fr 1fr}
+    }
+    @media (max-width: 800px){
+      .products-grid{grid-template-columns: 1fr 1fr}
+    }
+    @media (max-width: 520px){
+      .products-grid{grid-template-columns: 1fr}
+      .price-filter{width:100%; justify-content:flex-end}
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <span>🛒</span> Vendimarket
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="index.html#stores">Stores</a></li>
-            </ul>
-            <a href="cart.html" class="cart-icon">
-                <span>🛍️</span> Cart
-                <span class="cart-count" id="cartCount">0</span>
-            </a>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header fade-in">
-            <h1 class="page-title">Product Catalog</h1>
-            <p class="page-subtitle">3,500+ items available 24/7 across all categories</p>
+  <section class="catalog-section">
+    <div class="container">
+      <h1 class="section-title">Browse Products</h1>
+
+      <!-- Toolbar: search + sort + price + risultati -->
+      <div class="toolbar">
+        <div class="search">
+          <input id="searchInput" type="search" placeholder="Search products or brands…" autocomplete="off" />
         </div>
 
-        <!-- Filter Section -->
-        <section class="filter-section fade-in">
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Search products..." id="searchInput">
-            </div>
-            
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <div class="filter-title">Categories</div>
-                    <div class="filter-options" id="categoryFilters">
-                        <!-- Categories will be loaded by JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <div class="filter-title">Brands</div>
-                    <div class="filter-options" id="brandFilters">
-                        <!-- Brands will be loaded by JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <div class="filter-title">Temperature Zones</div>
-                    <div class="filter-options" id="temperatureFilters">
-                        <div class="filter-tag" data-temp="ambient">Ambient</div>
-                        <div class="filter-tag" data-temp="cold">Cold</div>
-                        <div class="filter-tag" data-temp="frozen">Frozen</div>
-                        <div class="filter-tag" data-temp="hot">Hot</div>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <div class="filter-title">Dietary Preferences</div>
-                    <div class="filter-options" id="dietaryFilters">
-                        <div class="filter-tag" data-diet="vegan">Vegan</div>
-                        <div class="filter-tag" data-diet="gluten-free">Gluten-Free</div>
-                        <div class="filter-tag" data-diet="keto">Keto</div>
-                        <div class="filter-tag" data-diet="low-sugar">Low Sugar</div>
-                    </div>
-                </div>
-                
-                <div class="filter-group">
-                    <div class="filter-title">Price Range</div>
-                    <div class="price-range">
-                        <input type="range" class="price-slider" id="priceSlider" min="0" max="50" value="50">
-                        <div class="price-values">
-                            <span>$0</span>
-                            <span id="maxPrice">$50+</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <select id="sortSelect" title="Sort">
+          <option value="popularity">Sort: Popularity</option>
+          <option value="price-low">Price: Low → High</option>
+          <option value="price-high">Price: High → Low</option>
+          <option value="name">Name (A–Z)</option>
+          <option value="brand">Brand (A–Z)</option>
+        </select>
 
-        <!-- Products Section -->
-        <section class="products-section">
-            <div class="products-header">
-                <div class="results-count" id="resultsCount">Loading products...</div>
-                <select class="sort-select" id="sortSelect">
-                    <option value="popularity">Sort by Popularity</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="name">Name A-Z</option>
-                    <option value="brand">Brand A-Z</option>
-                    <option value="freshness">Freshness</option>
-                </select>
-            </div>
+        <label class="price-filter" for="priceSlider">
+          <span>Max price</span>
+          <input id="priceSlider" type="range" min="0" max="50" step="1" value="50" />
+          <strong id="maxPrice">$50+</strong>
+        </label>
 
-            <div class="loading-state" id="loadingState">
-                <div class="loading-spinner"></div>
-                <p>Loading products...</p>
-            </div>
+        <span id="resultsCount" class="results-count"></span>
+      </div>
 
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <h3>No products found</h3>
-                <p>Try adjusting your filters or search terms</p>
-            </div>
+      <!-- Blocchi filtri -->
+      <div class="filters-grid">
+        <div class="filter-block">
+          <h3>Categories</h3>
+          <div id="categoryFilters" class="filter-list"></div>
+        </div>
 
-            <div class="products-grid" id="productsGrid">
-                <!-- Products will be loaded by JavaScript -->
-            </div>
-        </section>
+        <div class="filter-block">
+          <h3>Brands</h3>
+          <div id="brandFilters" class="filter-list"></div>
+        </div>
 
-        <!-- Recipe Bundles Section -->
-        <section class="recipe-bundles fade-in">
-            <h2 class="bundles-title">Recipe Bundles</h2>
-            <div class="bundles-grid" id="bundlesGrid">
-                <!-- Bundles will be loaded by JavaScript -->
-            </div>
-        </section>
-    </main>
+        <div class="filter-block">
+          <h3>Temperature Zones</h3>
+          <div id="temperatureFilters" class="filter-list">
+            <div class="filter-tag" data-temp="ambient">Ambient</div>
+            <div class="filter-tag" data-temp="cold">Cold</div>
+            <div class="filter-tag" data-temp="frozen">Frozen</div>
+          </div>
+        </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 Vendimarket. Revolutionizing retail through automation innovation.</p>
-    </footer>
+        <div class="filter-block">
+          <h3>Dietary Preferences</h3>
+          <div id="dietaryFilters" class="filter-list">
+            <div class="filter-tag" data-diet="vegan">Vegan</div>
+            <div class="filter-tag" data-diet="gluten-free">Gluten-Free</div>
+            <div class="filter-tag" data-diet="keto">Keto</div>
+            <div class="filter-tag" data-diet="low-sugar">Low Sugar</div>
+          </div>
+        </div>
+      </div>
 
-    <script src="main.js" defer></script>
+      <!-- Stati + griglia -->
+      <div id="loadingState" class="state">Loading…</div>
+      <div id="emptyState" class="state" style="display:none">No products match your filters.</div>
+      <div id="productsGrid" class="products-grid"></div>
+    </div>
+  </section>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // ---- helpers ----
-      const U = (q) => `https://source.unsplash.com/600x400/?${encodeURIComponent(q)}`;
-    
-      const els = {
-        category: document.getElementById('categoryFilters'),
-        brand:    document.getElementById('brandFilters'),
-        temp:     document.getElementById('temperatureFilters'),
-        diet:     document.getElementById('dietaryFilters'),
-        grid:     document.getElementById('productsGrid'),
-        count:    document.getElementById('resultsCount'),
-        empty:    document.getElementById('emptyState'),
-        loading:  document.getElementById('loadingState'),
-        search:   document.getElementById('searchInput'),
-        sort:     document.getElementById('sortSelect'),
-        slider:   document.getElementById('priceSlider'),
-        maxPrice: document.getElementById('maxPrice'),
-      };
-    
-      // ---- dataset "supermercato" ----
-      const CATEGORIES = ["Fresh Produce","Bakery","Dairy & Eggs","Pantry","Beverages","Frozen","Household"];
-      const BRANDS = ["Vendimarket","Barilla","De Cecco","Mutti","Lavazza","Illy","Galbani","Parmalat","Granarolo","Rio Mare","San Pellegrino","Twinings","Tropicana","Riso Scotti","Cirio","De Nigris"];
-    
-      const PRODUCTS = [
-        {name:"Red Apples (1kg)",          brand:"Vendimarket",   category:"Fresh Produce", price:2.49, temperature:"ambient", dietary:["vegan"],              img:U("apples produce grocery")},
-        {name:"Bananas (1kg)",             brand:"Vendimarket",   category:"Fresh Produce", price:1.99, temperature:"ambient", dietary:["vegan","low-sugar"], img:U("bananas fruit")},
-        {name:"Vine Tomatoes (500g)",      brand:"Vendimarket",   category:"Fresh Produce", price:1.89, temperature:"ambient", dietary:["vegan"],              img:U("tomatoes")},
-        {name:"Romaine Lettuce",           brand:"Vendimarket",   category:"Fresh Produce", price:1.49, temperature:"cold",    dietary:["vegan"],              img:U("romaine lettuce")},
-        {name:"Fresh Baguette",            brand:"Vendimarket",   category:"Bakery",        price:1.20, temperature:"ambient", dietary:[],                      img:U("baguette bread")},
-        {name:"Butter Croissants (2pc)",   brand:"Vendimarket",   category:"Bakery",        price:1.90, temperature:"ambient", dietary:[],                      img:U("croissant pastry")},
-        {name:"Milk 1L",                   brand:"Parmalat",      category:"Dairy & Eggs",  price:1.29, temperature:"cold",    dietary:[],                      img:U("milk carton")},
-        {name:"Free-range Eggs (6)",       brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.10, temperature:"cold",    dietary:[],                      img:U("eggs carton")},
-        {name:"Mozzarella 125g",           brand:"Galbani",       category:"Dairy & Eggs",  price:1.35, temperature:"cold",    dietary:["gluten-free"],         img:U("mozzarella cheese")},
-        {name:"Greek Yogurt 500g",         brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.40, temperature:"cold",    dietary:["low-sugar"],          img:U("greek yogurt")},
-        {name:"Spaghetti 500g",            brand:"Barilla",       category:"Pantry",        price:1.09, temperature:"ambient", dietary:[],                      img:U("spaghetti dry pasta")},
-        {name:"Passata 700g",              brand:"Mutti",         category:"Pantry",        price:1.69, temperature:"ambient", dietary:["vegan","gluten-free"], img:U("tomato passata sauce")},
-        {name:"Arborio Rice 1kg",          brand:"Riso Scotti",   category:"Pantry",        price:2.49, temperature:"ambient", dietary:["vegan","gluten-free"], img:U("arborio rice raw")},
-        {name:"Extra Virgin Olive Oil 1L", brand:"De Nigris",     category:"Pantry",        price:6.90, temperature:"ambient", dietary:["vegan","keto"],        img:U("olive oil bottle")},
-        {name:"Canned Tuna 3x80g",         brand:"Rio Mare",      category:"Pantry",        price:4.49, temperature:"ambient", dietary:[],                      img:U("tuna can")},
-        {name:"Espresso Beans 1kg",        brand:"Lavazza",       category:"Beverages",     price:12.90,temperature:"ambient", dietary:["keto","low-sugar"],    img:U("coffee beans espresso")},
-        {name:"Earl Grey Tea 25 bags",     brand:"Twinings",      category:"Beverages",     price:3.20, temperature:"ambient", dietary:["vegan","low-sugar"],   img:U("earl grey tea box")},
-        {name:"Orange Juice 1L",           brand:"Tropicana",     category:"Beverages",     price:2.10, temperature:"cold",    dietary:["vegan"],              img:U("orange juice bottle")},
-        {name:"Sparkling Water 1L",        brand:"San Pellegrino",category:"Beverages",     price:0.89, temperature:"ambient", dietary:["vegan"],              img:U("sparkling water bottle")},
-        {name:"Frozen Margherita Pizza",   brand:"Vendimarket",   category:"Frozen",        price:3.99, temperature:"frozen",  dietary:[],                      img:U("frozen pizza margherita")},
-        {name:"Vanilla Gelato 500ml",      brand:"Vendimarket",   category:"Frozen",        price:3.50, temperature:"frozen",  dietary:[],                      img:U("ice cream tub vanilla")},
-        {name:"Paper Towels (2-pack)",     brand:"Vendimarket",   category:"Household",     price:1.99, temperature:"ambient", dietary:[],                      img:U("paper towels roll")},
-        {name:"Dish Soap 500ml",           brand:"Vendimarket",   category:"Household",     price:1.49, temperature:"ambient", dietary:[],                      img:U("dish soap bottle")}
-      ];
-    
-      // stato filtri
-      const state = { q:"", cat:null, brand:null, temps:new Set(), diets:new Set(), max:50, sort:"popularity" };
-    
-      // utility per creare tag filtro
-      const mkTag = (label, onClick, active=false) => {
-        const d = document.createElement('div');
-        d.className = 'filter-tag' + (active?' active':'');
-        d.textContent = label;
-        d.addEventListener('click', () => onClick(d, label));
-        return d;
-      };
-    
-      // popola categorie e brand (sovrascrive quelli di main.js)
-      function seedFilters(){
-        els.category.innerHTML = '';
-        els.category.appendChild(mkTag('All Products', (d)=>{ [...els.category.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.cat=null; render(); }, true));
-        CATEGORIES.forEach(c => els.category.appendChild(mkTag(c, (d)=>{ [...els.category.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.cat=c; render(); })));
-    
-        els.brand.innerHTML = '';
-        els.brand.appendChild(mkTag('All Brands', (d)=>{ [...els.brand.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.brand=null; render(); }, true));
-        BRANDS.forEach(b => els.brand.appendChild(mkTag(b, (d)=>{ [...els.brand.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.brand=b; render(); })));
-    
-        // toggle multipli per temperature & dietary (gli elementi sono già in HTML)
-        els.temp.querySelectorAll('[data-temp]').forEach(t => {
-          t.addEventListener('click', ()=>{ t.classList.toggle('active');
-            const k = t.dataset.temp; t.classList.contains('active') ? state.temps.add(k) : state.temps.delete(k); render();
-          });
+  <script>
+    // ========= DATASET SUPERMERCATO =========
+    const CATEGORIES = [
+      "Fresh Produce","Bakery","Dairy & Eggs","Pantry","Beverages","Frozen","Household"
+    ];
+
+    const BRANDS = [
+      "Vendimarket","Barilla","De Cecco","Mutti","Lavazza","Illy","Galbani","Parmalat",
+      "Granarolo","Rio Mare","San Pellegrino","Twinings","Tropicana","Riso Scotti","Cirio","De Nigris"
+    ];
+
+    const U = (q) => `https://source.unsplash.com/600x400/?${encodeURIComponent(q)}`;
+
+    const PRODUCTS = [
+      {name:"Red Apples (1kg)",          brand:"Vendimarket",   category:"Fresh Produce", price:2.49, temperature:"ambient", dietary:["vegan"],              img:U("apples produce grocery")},
+      {name:"Bananas (1kg)",             brand:"Vendimarket",   category:"Fresh Produce", price:1.99, temperature:"ambient", dietary:["vegan","low-sugar"], img:U("bananas fruit")},
+      {name:"Vine Tomatoes (500g)",      brand:"Vendimarket",   category:"Fresh Produce", price:1.89, temperature:"ambient", dietary:["vegan"],              img:U("tomatoes grocery")},
+      {name:"Romaine Lettuce",           brand:"Vendimarket",   category:"Fresh Produce", price:1.49, temperature:"cold",    dietary:["vegan"],              img:U("romaine lettuce")},
+      {name:"Fresh Baguette",            brand:"Vendimarket",   category:"Bakery",        price:1.20, temperature:"ambient", dietary:[],                      img:U("baguette bread")},
+      {name:"Butter Croissants (2pc)",   brand:"Vendimarket",   category:"Bakery",        price:1.90, temperature:"ambient", dietary:[],                      img:U("croissant pastry")},
+      {name:"Milk 1L",                   brand:"Parmalat",      category:"Dairy & Eggs",  price:1.29, temperature:"cold",    dietary:[],                      img:U("milk carton")},
+      {name:"Free-range Eggs (6)",       brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.10, temperature:"cold",    dietary:[],                      img:U("eggs carton")},
+      {name:"Mozzarella 125g",           brand:"Galbani",       category:"Dairy & Eggs",  price:1.35, temperature:"cold",    dietary:["gluten-free"],         img:U("mozzarella cheese")},
+      {name:"Greek Yogurt 500g",         brand:"Vendimarket",   category:"Dairy & Eggs",  price:2.40, temperature:"cold",    dietary:["low-sugar"],          img:U("greek yogurt")},
+      {name:"Spaghetti 500g",            brand:"Barilla",       category:"Pantry",        price:1.09, temperature:"ambient", dietary:[],                      img:U("spaghetti dry pasta")},
+      {name:"Passata 700g",              brand:"Mutti",         category:"Pantry",        price:1.69, temperature:"ambient", dietary:["vegan","gluten-free"], img:U("tomato passata sauce")},
+      {name:"Arborio Rice 1kg",          brand:"Riso Scotti",   category:"Pantry",        price:2.49, temperature:"ambient", dietary:["vegan","gluten-free"], img:U("arborio rice raw")},
+      {name:"Extra Virgin Olive Oil 1L", brand:"De Nigris",     category:"Pantry",        price:6.90, temperature:"ambient", dietary:["vegan","keto"],        img:U("olive oil bottle")},
+      {name:"Canned Tuna 3x80g",         brand:"Rio Mare",      category:"Pantry",        price:4.49, temperature:"ambient", dietary:[],                      img:U("tuna can")},
+      {name:"Espresso Beans 1kg",        brand:"Lavazza",       category:"Beverages",     price:12.90,temperature:"ambient", dietary:["keto","low-sugar"],    img:U("coffee beans espresso")},
+      {name:"Earl Grey Tea 25 bags",     brand:"Twinings",      category:"Beverages",     price:3.20, temperature:"ambient", dietary:["vegan","low-sugar"],   img:U("earl grey tea box")},
+      {name:"Orange Juice 1L",           brand:"Tropicana",     category:"Beverages",     price:2.10, temperature:"cold",    dietary:["vegan"],              img:U("orange juice bottle")},
+      {name:"Sparkling Water 1L",        brand:"San Pellegrino",category:"Beverages",     price:0.89, temperature:"ambient", dietary:["vegan"],              img:U("sparkling water bottle")},
+      {name:"Frozen Margherita Pizza",   brand:"Vendimarket",   category:"Frozen",        price:3.99, temperature:"frozen",  dietary:[],                      img:U("frozen pizza margherita")},
+      {name:"Vanilla Gelato 500ml",      brand:"Vendimarket",   category:"Frozen",        price:3.50, temperature:"frozen",  dietary:[],                      img:U("ice cream tub vanilla")},
+      {name:"Paper Towels (2-pack)",     brand:"Vendimarket",   category:"Household",     price:1.99, temperature:"ambient", dietary:[],                      img:U("paper towels roll")},
+      {name:"Dish Soap 500ml",           brand:"Vendimarket",   category:"Household",     price:1.49, temperature:"ambient", dietary:[],                      img:U("dish soap bottle")}
+    ];
+
+    // ========= APP =========
+    const els = {
+      cat: document.getElementById('categoryFilters'),
+      brand: document.getElementById('brandFilters'),
+      temp: document.getElementById('temperatureFilters'),
+      diet: document.getElementById('dietaryFilters'),
+      grid: document.getElementById('productsGrid'),
+      count: document.getElementById('resultsCount'),
+      empty: document.getElementById('emptyState'),
+      loading: document.getElementById('loadingState'),
+      q: document.getElementById('searchInput'),
+      sort: document.getElementById('sortSelect'),
+      slider: document.getElementById('priceSlider'),
+      maxPrice: document.getElementById('maxPrice'),
+    };
+
+    const state = { q:"", cat:null, brand:null, temps:new Set(), diets:new Set(), max:50, sort:"popularity" };
+
+    const mkTag = (label, onClick, active=false) => {
+      const d = document.createElement('div');
+      d.className = 'filter-tag' + (active?' active':'');
+      d.textContent = label;
+      d.addEventListener('click', () => onClick(d, label));
+      return d;
+    };
+
+    function seedFilters(){
+      // categorie
+      els.cat.innerHTML = '';
+      els.cat.appendChild(mkTag('All Products', (d)=>{ [...els.cat.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.cat=null; render(); }, true));
+      CATEGORIES.forEach(c => els.cat.appendChild(mkTag(c, (d)=>{ [...els.cat.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.cat=c; render(); })));
+
+      // brand
+      els.brand.innerHTML = '';
+      els.brand.appendChild(mkTag('All Brands', (d)=>{ [...els.brand.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.brand=null; render(); }, true));
+      BRANDS.forEach(b => els.brand.appendChild(mkTag(b, (d)=>{ [...els.brand.children].forEach(c=>c.classList.remove('active')); d.classList.add('active'); state.brand=b; render(); })));
+
+      // temperature: toggle multipli
+      els.temp.querySelectorAll('[data-temp]').forEach(t=>{
+        t.addEventListener('click', ()=>{ t.classList.toggle('active');
+          const k = t.dataset.temp; t.classList.contains('active') ? state.temps.add(k) : state.temps.delete(k); render();
         });
-        els.diet.querySelectorAll('[data-diet]').forEach(t => {
-          t.addEventListener('click', ()=>{ t.classList.toggle('active');
-            const k = t.dataset.diet; t.classList.contains('active') ? state.diets.add(k) : state.diets.delete(k); render();
-          });
+      });
+      // dietary: toggle multipli
+      els.diet.querySelectorAll('[data-diet]').forEach(t=>{
+        t.addEventListener('click', ()=>{ t.classList.toggle('active');
+          const k = t.dataset.diet; t.classList.contains('active') ? state.diets.add(k) : state.diets.delete(k); render();
         });
-      }
-    
-      function card(p){
-        const dietHTML = p.dietary?.length ? `<div class="dietary-badges">${p.dietary.map(d => `<span class="dietary-badge ${d==='vegan'?'badge-vegan':d==='gluten-free'?'badge-gluten-free':d==='keto'?'badge-keto':'badge-low-sugar'}">${d.replace('-',' ')}</span>`).join('')}</div>` : '';
-        return `
-          <div class="product-card">
-            <div class="product-image">
-              <img src="${p.img}" alt="${p.name}" onerror="this.onerror=null;this.src='https://source.unsplash.com/600x400/?grocery';">
-              <span class="temperature-badge ${p.temperature==='cold'?'temp-cold':p.temperature==='frozen'?'temp-frozen':'temp-ambient'}">${p.temperature[0].toUpperCase()+p.temperature.slice(1)}</span>
-            </div>
-            <div class="product-info">
-              <div class="product-brand">${p.brand}</div>
-              <h3>${p.name}</h3>
-              ${dietHTML}
-              <div class="product-price">$${p.price.toFixed(2)}</div>
-              <div class="product-actions"><button class="add-to-cart">Add to Cart</button></div>
-            </div>
-          </div>`;
-      }
-    
-      function applyFilters(list){
-        return list.filter(p =>
-          (!state.cat || p.category===state.cat) &&
-          (!state.brand || p.brand===state.brand) &&
-          (!state.temps.size || state.temps.has(p.temperature)) &&
-          (!state.diets.size || [...state.diets].every(d => p.dietary?.includes(d))) &&
-          (p.price <= state.max)
-        );
-      }
-    
-      function sortList(list){
-        switch(state.sort){
-          case 'price-low':  return list.sort((a,b)=>a.price-b.price);
-          case 'price-high': return list.sort((a,b)=>b.price-a.price);
-          case 'name':       return list.sort((a,b)=>a.name.localeCompare(b.name));
-          case 'brand':      return list.sort((a,b)=>a.brand.localeCompare(b.brand));
-          default:           return list;
-        }
-      }
-    
-      function render(){
-        els.loading.style.display = 'none';
-        const q = (els.search.value||'').trim().toLowerCase();
-        const filtered = sortList(applyFilters(PRODUCTS.filter(p => (p.name+' '+p.brand).toLowerCase().includes(q))));
-        els.count.textContent = `${filtered.length} products`;
-        els.grid.innerHTML = filtered.map(card).join('');
-        els.empty.style.display = filtered.length ? 'none' : 'block';
-      }
-    
-      // eventi
-      els.search.addEventListener('input', render);
-      els.sort.addEventListener('change', (e)=>{ state.sort = e.target.value; render(); });
-      els.slider.addEventListener('input', (e)=>{ state.max = +e.target.value; els.maxPrice.textContent = `$${state.max}+`; render(); });
-    
-      seedFilters();
-      render();
-    });
-    </script>
+      });
+    }
 
+    function card(p){
+      const dietHTML = p.dietary?.length ? `<div class="dietary-badges">${p.dietary.map(d =>
+        `<span class="dietary-badge ${d==='vegan'?'badge-vegan':d==='gluten-free'?'badge-gluten-free':d==='keto'?'badge-keto':'badge-low-sugar'}">${d.replace('-',' ')}</span>`
+      ).join('')}</div>` : '';
 
-    
+      return `
+        <div class="product-card">
+          <div class="product-image">
+            <img src="${p.img}" alt="${p.name}" loading="lazy"
+                 onerror="this.onerror=null;this.src='https://source.unsplash.com/600x400/?grocery';">
+            <span class="temperature-badge ${p.temperature==='cold'?'temp-cold':p.temperature==='frozen'?'temp-frozen':'temp-ambient'}">
+              ${p.temperature[0].toUpperCase()+p.temperature.slice(1)}
+            </span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">${p.brand}</div>
+            <h3>${p.name}</h3>
+            ${dietHTML}
+            <div class="product-price">$${p.price.toFixed(2)}</div>
+            <div class="product-actions"><button class="add-to-cart" aria-label="Add ${p.name} to cart">Add to Cart</button></div>
+          </div>
+        </div>`;
+    }
 
+    function applyFilters(list){
+      return list.filter(p =>
+        (!state.cat || p.category===state.cat) &&
+        (!state.brand || p.brand===state.brand) &&
+        (!state.temps.size || state.temps.has(p.temperature)) &&
+        (!state.diets.size || [...state.diets].every(d => p.dietary?.includes(d))) &&
+        (p.price <= state.max) &&
+        (!state.q || (p.name + ' ' + p.brand).toLowerCase().includes(state.q))
+      );
+    }
 
+    function sortList(list){
+      switch(state.sort){
+        case 'price-low':  return list.sort((a,b)=>a.price-b.price);
+        case 'price-high': return list.sort((a,b)=>b.price-a.price);
+        case 'name':       return list.sort((a,b)=>a.name.localeCompare(b.name));
+        case 'brand':      return list.sort((a,b)=>a.brand.localeCompare(b.brand));
+        default:           return list;
+      }
+    }
+
+    function render(){
+      els.loading.style.display = 'none';
+      state.q = (els.q.value||'').trim().toLowerCase();
+      const filtered = sortList(applyFilters(PRODUCTS.slice()));
+      els.count.textContent = `${filtered.length} products`;
+      els.grid.innerHTML = filtered.map(card).join('');
+      els.empty.style.display = filtered.length ? 'none' : 'block';
+    }
+
+    // eventi base
+    document.addEventListener('DOMContentLoaded', seedFilters);
+    seedFilters();
+    els.q.addEventListener('input', render);
+    els.sort.addEventListener('change', (e)=>{ state.sort = e.target.value; render(); });
+    els.slider.addEventListener('input', (e)=>{ state.max = +e.target.value; els.maxPrice.textContent = `$${state.max}+`; render(); });
+
+    render();
+  </script>
 </body>
 </html>
