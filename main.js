@@ -124,7 +124,6 @@ class VendimarketApp {
                 temp: 'ambient',
                 image: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=400&h=300&fit=crop'
             },
-                
             'Cleaning Supplies': {
                 brands: {
                     'Bathroom Cleaners': {
@@ -139,7 +138,6 @@ class VendimarketApp {
                 temp: 'ambient',
                 image: 'https://images.unsplash.com/photo-1626379481874-3dc5678fa8ca?w=400&h=300&fit=crop'
             },
-            
             'Ice Cream': {
                 brands: {
                     'Ben & Jerry\'s': {
