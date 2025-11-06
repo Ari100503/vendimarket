@@ -65,7 +65,7 @@ class VendimarketApp {
                 }
               },
               temp: 'ambient',
-              image: 'https://source.unsplash.com/1200x800/?pasta'
+              image: 'https://images.unsplash.com/photo-1598720290281-9f26ae6d6f81?w=400&h=300&fit=crop'
             },
             
             'Fruits & Vegetables': {
@@ -84,7 +84,7 @@ class VendimarketApp {
                 }
               },
               temp: 'cold',
-              image: 'https://source.unsplash.com/1200x800/?fruits,vegetables'
+              image: 'https://images.unsplash.com/photo-1610415958681-7aabb05711f5?w=400&h=300&fit=crop'
             },
             
             'Bread': {
@@ -103,7 +103,7 @@ class VendimarketApp {
                 }
               },
               temp: 'ambient',
-              image: 'https://source.unsplash.com/1200x800/?bread,bakery'
+              image: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=400&h=300&fit=crop'
             },
 
             'Soft Drinks': {
