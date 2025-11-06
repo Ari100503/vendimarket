@@ -29,7 +29,7 @@ class VendimarketApp {
 
     // Generate comprehensive product catalog with brands and flavors
     generateProducts() {
-        // Complete category definition with brands and flavors
+        // Complete y definition with brands and flavors
         const categoryData = {
             'Chips & Snacks': {
                 brands: {
@@ -44,55 +44,68 @@ class VendimarketApp {
                     'Doritos': {
                         flavors: ['Nacho Cheese', 'Cool Ranch', 'Spicy Sweet Chili', 'Flamin\' Hot'],
                         locations: ['Totem A2', 'Totem C1']
-                    },
-                    'Ruffles': {
-                        flavors: ['Original', 'Cheddar & Sour Cream', 'All Dressed', 'BBQ'],
-                        locations: ['Totem B2', 'Totem C2']
                     }
                 },
                 temp: 'ambient',
                 image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&h=300&fit=crop'
             },
-            'Chocolate & Candy': {
-                brands: {
-                    'Snickers': {
-                        flavors: ['Original', 'Peanut Butter', 'Almond', 'Ice Cream Bar', 'Mini'],
-                        locations: ['Totem A1', 'Totem B1', 'Totem C1', 'Totem D1']
-                    },
-                    'M&M\'s': {
-                        flavors: ['Milk Chocolate', 'Peanut', 'Crispy', 'Caramel'],
-                        locations: ['Totem A2', 'Totem C2']
-                    },
-                    'Kit Kat': {
-                        flavors: ['Original', 'Dark Chocolate', 'White Chocolate', 'Chunky', 'Big Kat'],
-                        locations: ['Totem A1', 'Totem B2', 'Totem D2']
-                    },
-                    'Reese\'s': {
-                        flavors: ['Peanut Butter Cups', 'Pieces', 'Sticks', 'Big Cup'],
-                        locations: ['Totem B1', 'Totem C1']
-                    }
+            'Pasta': {
+              brands: {
+                'Barilla': {
+                  flavors: ['Spaghetti', 'Penne Rigate', 'Fusilli', 'Farfalle'],
+                  locations: ['Totem A2', 'Totem C2']
                 },
-                temp: 'ambient',
-                image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?w=400&h=300&fit=crop'
-            },
-            'Protein Bars': {
-                brands: {
-                    'Quest': {
-                        flavors: ['Chocolate Chip Cookie Dough', 'Peanut Butter', 'S\'mores', 'Birthday Cake'],
-                        locations: ['Totem A2', 'Totem B1', 'Totem D1']
-                    },
-                    'RX Bar': {
-                        flavors: ['Chocolate Sea Salt', 'Peanut Butter', 'Blueberry', 'Mixed Berry'],
-                        locations: ['Totem A1', 'Totem C2']
-                    },
-                    'Clif Bar': {
-                        flavors: ['Chocolate Chip', 'Peanut Butter', 'White Chocolate Macadamia', 'Crunchy Peanut Butter'],
-                        locations: ['Totem B2', 'Totem D1']
-                    }
+                'De Cecco': {
+                  flavors: ['Spaghetti No.12', 'Rigatoni', 'Orecchiette'],
+                  locations: ['Totem B1']
                 },
-                temp: 'ambient',
-                image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400&h=300&fit=crop'
+                'Rummo': {
+                  flavors: ['Linguine', 'Mezze Penne', 'Conchiglie'],
+                  locations: ['Totem D2']
+                }
+              },
+              temp: 'ambient',
+              image: 'https://source.unsplash.com/1200x800/?pasta'
             },
+            
+            'Fruits & Vegetables': {
+              brands: {
+                'Fresh Farm': {
+                  flavors: ['Gala Apples', 'Bananas', 'Navel Oranges', 'Baby Carrots'],
+                  locations: ['Totem A3', 'Totem B3']
+                },
+                'Green Valley': {
+                  flavors: ['Cherry Tomatoes', 'Cucumbers', 'Mixed Salad'],
+                  locations: ['Totem C3']
+                },
+                'Daily Fresh': {
+                  flavors: ['Strawberries', 'Blueberries', 'Lemons'],
+                  locations: ['Totem D3']
+                }
+              },
+              temp: 'cold',
+              image: 'https://source.unsplash.com/1200x800/?fruits,vegetables'
+            },
+            
+            'Bread': {
+              brands: {
+                "La Brea Bakery": {
+                  flavors: ['Sourdough Loaf', 'Baguette', 'Ciabatta'],
+                  locations: ['Totem A4']
+                },
+                "Nature's Own": {
+                  flavors: ['White Bread', 'Whole Wheat', 'Honey Wheat', 'Multigrain'],
+                  locations: ['Totem B4']
+                },
+                "Pepperidge Farm": {
+                  flavors: ['Rye', 'Whole Grain', 'Oatmeal'],
+                  locations: ['Totem D4']
+                }
+              },
+              temp: 'ambient',
+              image: 'https://source.unsplash.com/1200x800/?bread,bakery'
+            },
+
             'Soft Drinks': {
                 brands: {
                     'Coca-Cola': {
@@ -114,70 +127,6 @@ class VendimarketApp {
                 },
                 temp: 'cold',
                 image: 'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400&h=300&fit=crop'
-            },
-            'Energy Drinks': {
-                brands: {
-                    'Red Bull': {
-                        flavors: ['Original', 'Sugar Free', 'Tropical', 'Coconut Berry', 'Watermelon'],
-                        locations: ['Totem A1', 'Totem B1', 'Totem C2', 'Totem D2']
-                    },
-                    'Monster': {
-                        flavors: ['Original', 'Ultra White', 'Ultra Blue', 'Mango Loco', 'Pipeline Punch'],
-                        locations: ['Totem A2', 'Totem B2', 'Totem D1']
-                    },
-                    'Rockstar': {
-                        flavors: ['Original', 'Pure Zero', 'Fruit Punch', 'Recovery'],
-                        locations: ['Totem C1', 'Totem D2']
-                    }
-                },
-                temp: 'cold',
-                image: 'https://images.unsplash.com/photo-1622543925917-763c34c1a589?w=400&h=300&fit=crop'
-            },
-            'Water & Hydration': {
-                brands: {
-                    'Dasani': {
-                        flavors: ['Purified Water', 'Lime', 'Strawberry', 'Raspberry'],
-                        locations: ['Totem A1', 'Totem B1', 'Totem C1', 'Totem D1']
-                    },
-                    'Smartwater': {
-                        flavors: ['Original', 'Alkaline', 'Sparkling', 'Antioxidant'],
-                        locations: ['Totem A2', 'Totem B2', 'Totem C2']
-                    },
-                    'Vitaminwater': {
-                        flavors: ['Focus', 'Energy', 'Essential', 'XXX'],
-                        locations: ['Totem A1', 'Totem C1', 'Totem D2']
-                    }
-                },
-                temp: 'cold',
-                image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=300&fit=crop'
-            },
-            'Coffee': {
-                brands: {
-                    'Starbucks': {
-                        flavors: ['Pike Place', 'Espresso Roast', 'Blonde Roast', 'Decaf'],
-                        locations: ['Totem A1', 'Totem B1', 'Totem C1']
-                    },
-                    'Dunkin\'': {
-                        flavors: ['Original Blend', 'Dark Roast', 'French Vanilla', 'Hazelnut'],
-                        locations: ['Totem A2', 'Totem D1']
-                    }
-                },
-                temp: 'hot',
-                image: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop'
-            },
-            'Fresh Sandwiches': {
-                brands: {
-                    'Daily Fresh': {
-                        flavors: ['Turkey & Swiss', 'Ham & Cheese', 'Veggie Delight', 'Chicken Caesar', 'BLT'],
-                        locations: ['Totem A1', 'Totem C1']
-                    },
-                    'Deli Express': {
-                        flavors: ['Club Sandwich', 'Italian Sub', 'Tuna Salad', 'Roast Beef'],
-                        locations: ['Totem B1', 'Totem D1']
-                    }
-                },
-                temp: 'cold',
-                image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400&h=300&fit=crop'
             },
             'Ice Cream': {
                 brands: {
@@ -214,24 +163,6 @@ class VendimarketApp {
                 },
                 temp: 'ambient',
                 image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=300&fit=crop'
-            },
-            'Gum & Mints': {
-                brands: {
-                    'Orbit': {
-                        flavors: ['Spearmint', 'Peppermint', 'Wintermint', 'Sweet Mint'],
-                        locations: ['Totem A1', 'Totem B1', 'Totem C1', 'Totem D1']
-                    },
-                    'Trident': {
-                        flavors: ['Original', 'Tropical Twist', 'Watermelon Twist', 'Mint Bliss'],
-                        locations: ['Totem A2', 'Totem B2', 'Totem C2']
-                    },
-                    'Tic Tac': {
-                        flavors: ['Fresh Mint', 'Orange', 'Wintergreen', 'Fruit Adventure'],
-                        locations: ['Totem B1', 'Totem D2']
-                    }
-                },
-                temp: 'ambient',
-                image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&h=300&fit=crop'
             }
         };
 
