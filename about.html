@@ -15,7 +15,7 @@
     
     <style>
         :root {
-            --primary-blue: #2C3E50;
+            --primary-blue: #2B9EF4;
             --bright-cyan: #00BCD4;
             --pure-white: #FFFFFF;
             --warm-gray: #95A5A6;
@@ -60,14 +60,9 @@
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--bright-cyan);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .logo img {
+            height: 80px; /* o 65px, 70px - prova fino a trovare la dimensione giusta */
+            width: auto;
         }
 
         .nav-links {
@@ -607,7 +602,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <span>🛒</span> Vendimarket
+                <img src="resources/vendimarket-logo.png" alt="VendiMarket">
             </a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
